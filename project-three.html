@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Design of a Car Transmission System | Riya Vasan</title>
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --bg-soft: #0d1217;
+            --card-bg: #11181f;
+            --text-main: #f4f7fb;
+            --text-muted: #b3bdc9;
+            --accent: #ff8a3d;
+            --accent-2: #3aa0ff;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --bg: #0b1016;
+            --bg-2: #111b24;
+            --card: #121d27;
+            --card-soft: #172430;
+            --text: #edf3f9;
+            --muted: #b2bec9;
+            --border: rgba(255,255,255,0.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(circle at top left, rgba(98, 168, 255, 0.16), transparent 18%),
+                radial-gradient(circle at right bottom, rgba(255, 138, 61, 0.12), transparent 20%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+            color: var(--text);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(100%, 1700px);
+            margin: 0 auto;
+            padding: 18px 18px 40px;
+        }
+
+        .page-wrap {
+            width: min(100%, 1700px);
+            margin: 0 auto;
+            padding: 18px 18px 40px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 10px 0;
+            background: rgba(11,16,22,0.94);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.96rem;
+        }
+
+        .back-link:hover { color: var(--accent-2); }
+
+        .project-board {
+            background: linear-gradient(145deg, rgba(30,37,42,0.98), rgba(19,24,28,0.99));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 26px 60px rgba(0,0,0,0.3), inset 0 1px rgba(255,255,255,0.05);
+            padding: clamp(20px, 3vw, 46px);
+        }
+
+        .project-heading {
+            margin-bottom: 18px;
+        }
+
+        .eyebrow {
+            margin: 0 0 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .project-subheadline {
+            margin: 12px 0 0;
+            color: var(--accent);
+            font-size: 1.08rem;
+            font-weight: 650;
+        }
+
+        .project-intro {
+            margin: 16px 0 0;
+            color: var(--text-muted);
+            font-size: 1.02rem;
+            max-width: 1200px;
+        }
+
+        .tools-methods {
+            margin: 18px 0 10px;
+            color: var(--text-main);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            padding: 6px 10px;
+            border: 1px solid rgba(98, 168, 255, 0.3);
+            border-radius: 999px;
+            background: rgba(98, 168, 255, 0.08);
+            color: #cfe0ff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .case-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+            gap: clamp(20px, 4vw, 40px);
+            align-items: center;
+            margin-top: 26px;
+            padding: clamp(18px, 2.5vw, 24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.018);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+        }
+
+        .hero-row {
+            grid-template-columns: minmax(220px, 0.5fr) minmax(0, 1.5fr);
+        }
+
+        .case-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .case-copy h2 {
+            margin: 0 0 12px;
+            font-size: 1.35rem;
+            line-height: 1.3;
+        }
+
+        .case-copy p {
+            margin: 0 0 12px;
+            color: var(--text-muted);
+        }
+
+        .metric-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .metric-value {
+            color: var(--accent);
+            font-size: clamp(1.8rem, 2vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .figure-card {
+            margin: 0;
+            background: linear-gradient(180deg, rgba(18, 29, 39, 0.98), rgba(14, 20, 26, 0.98));
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 12px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+            padding: 12px;
+            width: 100%;
+        }
+
+        .hero-figure {
+            width: 100%;
+            justify-self: start;
+        }
+
+        .figure-card img,
+        .figure-card video {
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: #1a2330;
+        }
+
+        .figure-card video {
+            height: auto;
+            max-height: 560px;
+            object-fit: initial;
+            background: transparent;
+            border: 2px solid rgba(98, 168, 255, 0.55);
+        }
+
+        .figure-card figcaption {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .project-page {
+            padding: clamp(20px, 3vw, 46px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(30,37,42,0.98), rgba(19,24,28,0.99));
+            box-shadow: 0 26px 60px rgba(0,0,0,0.3), inset 0 1px rgba(255,255,255,0.05);
+        }
+
+        .back-nav {
+            margin-bottom: 14px;
+        }
+
+        .back-nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 160ms ease;
+        }
+
+        .back-nav a:hover { color: var(--accent-2); }
+
+        .project-header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.15rem, 2vw + 1.3rem, 3.8rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .subtitle {
+            margin: 12px 0 0;
+            color: var(--accent);
+            font-size: 1.08rem;
+            font-weight: 650;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 10px;
+            border: 1px solid rgba(98, 168, 255, 0.3);
+            border-radius: 999px;
+            background: rgba(98, 168, 255, 0.08);
+            color: #cfe0ff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .meta-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .meta-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid rgba(255, 138, 61, 0.28);
+            border-radius: 999px;
+            background: rgba(255, 138, 61, 0.08);
+            color: #ffd5b5;
+            font-size: 0.76rem;
+            line-height: 1.3;
+        }
+
+        .section {
+            margin-top: 26px;
+            padding: clamp(18px, 2.5vw, 24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.018);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+        }
+
+        .section h2 {
+            margin: 0 0 12px;
+            font-size: 1.35rem;
+            line-height: 1.3;
+        }
+
+        .section p {
+            margin: 0 0 12px;
+            color: var(--text-muted);
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: block;
+            margin: 20px auto;
+        }
+
+        small {
+            color: var(--text-muted);
+            text-align: center;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .publication-card {
+            margin-top: 26px;
+            padding: 22px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .publication-card h2 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .publication-card p {
+            margin: 0 0 18px;
+            color: var(--text-muted);
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 10px 18px;
+            border: 1px solid rgba(58, 160, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(58, 160, 255, 0.08);
+            color: #dfeeff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+            border-color: rgba(58, 160, 255, 0.6);
+            background: rgba(58, 160, 255, 0.14);
+        }
+
+        .publication-card .button {
+            min-height: 42px;
+            padding: 9px 15px;
+            border-color: rgba(255, 153, 87, 0.4);
+            border-radius: 8px;
+            color: #f2c29f;
+            background: rgba(255, 138, 61, 0.1);
+            font-size: 0.92rem;
+        }
+
+        .publication-card .button:hover {
+            border-color: rgba(255, 153, 87, 0.62);
+            background: rgba(255, 138, 61, 0.17);
+        }
+
+        .project-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .project-nav a {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            color: var(--text);
+            font-size: 0.92rem;
+            text-decoration: none;
+            transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+        }
+
+        .project-nav a:hover {
+            transform: translateY(-1px);
+            border-color: rgba(58,160,255,0.6);
+            background: rgba(58,160,255,0.08);
+        }
+
+        .project-nav .nav-direction {
+            color: var(--muted);
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-nav .nav-title { font-weight: 700; }
+        .project-nav .previous-project { grid-column: 1; }
+        .project-nav .next-project { grid-column: 2; text-align: right; }
+
+        @media (max-width: 850px) {
+            .case-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-figure {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 12px 12px 28px; }
+            .project-page { padding: 16px; }
+            .button-row { flex-direction: column; }
+            .button { width: 100%; }
+            .project-nav { grid-template-columns: 1fr; }
+            .project-nav .previous-project { grid-column: auto; }
+            .project-nav .next-project { grid-column: auto; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-wrap">
+        <div class="topbar">
+            <a href="gemini-code-0915.html" class="back-link">← Back to Portfolio</a>
+        </div>
+
+        <article class="project-board">
+            <header class="project-heading">
+                <p class="eyebrow">Generative Design</p>
+                <h1>Generative Design of a Car Transmission System</h1>
+                <p class="project-subheadline">AI-Driven Optimization &amp; Design for Additive Manufacturing (DfAM)</p>
+                <p class="project-intro">A lightweight transmission redesign using generative algorithms, kinematic load modeling, and additive manufacturing to minimize mass while preserving structural integrity and functional performance.</p>
+                <p class="tools-methods">Tools &amp; Methods</p>
+                <div class="tech-stack" aria-label="Tools and methods">
+                    <span class="tech-tag">ANSYS Fluent</span>
+                    <span class="tech-tag">SolidWorks</span>
+                    <span class="tech-tag">Autodesk Fusion 360</span>
+                    <span class="tech-tag">Generative Design</span>
+                    <span class="tech-tag">Additive Manufacturing</span>
+                    <span class="tech-tag">CFD</span>
+                    <span class="tech-tag">RSM</span>
+                    <span class="tech-tag">ANOVA</span>
+                    <span class="tech-tag">Kinematic Load Modeling</span>
+                    <span class="tech-tag">AlSi10Mg</span>
+                    <span class="tech-tag">Topology Optimization</span>
+                    <span class="tech-tag">FEA</span>
+                    <span class="tech-tag">Aerodynamics</span>
+                </div>
+            </header>
+
+            <section class="case-row hero-row" aria-labelledby="challenge-title">
+                <figure class="figure-card hero-figure">
+                    <video autoplay muted loop playsinline preload="metadata" aria-label="Generative design gear animation thumbnail">
+                        <source src="GDT_GIF.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <figcaption>Generative transmission optimization animation showing the iterative lightweighting workflow.</figcaption>
+                </figure>
+                <div class="case-copy">
+                    <h2 id="challenge-title">The Lightweighting Challenge</h2>
+                    <p>Heavy rotating masses like gear wheels and transmission shafts drastically impact vehicle fuel consumption and greenhouse gas emissions. Traditional subtractive manufacturing methods severely limit weight reduction due to tool clearance constraints and standard wall thickness requirements.</p>
+                    <p>To solve this, I applied generative design and additive manufacturing principles to engineer a highly optimized, lightweight transmission system for commercial 4 wheelers.</p>
+                    <div class="metric-line">
+                        <span class="metric-value">23.1%</span>
+                        <span class="metric-label">mass reduction on output gear</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div style="display:grid; grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr); gap: clamp(20px, 4vw, 40px); align-items: center;">
+                    <figure style="margin:0;">
+                        <img src="figure_1gdt.jpg" alt="Mathematical load distribution diagram calculating rotational speeds and moments across the layshaft and output gears">
+                        <small>Mathematical load distribution diagram calculating rotational speeds and moments across the layshaft and output gears.</small>
+                    </figure>
+                    <div>
+                        <h2>Kinematic &amp; Dynamic Load Modeling</h2>
+                        <p>Before applying generative algorithms, I established the exact operating environment. I calculated the dynamic torque and moment loads based on a 150 kW engine running at a minimum speed of 800 rpm. This ensured that the Artificial Intelligence had accurate boundary conditions to reinforce regions experiencing high Von Mises stress while stripping away unnecessary material.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div style="display:grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); gap: clamp(20px, 4vw, 40px); align-items: center;">
+                    <div>
+                        <h2>AI Optimization &amp; Preserved Geometry</h2>
+                        <p>The CAD assembly was exported to Autodesk Fusion 360 for generative design. I isolated critical kinematic features by creating preserved geometry for the gear teeth profiles and keyways, while establishing obstacle geometry to prevent the software from generating material in clearance zones. The algorithm was programmed with a factor of safety limit of 2 and a primary objective to minimize mass.</p>
+                    </div>
+                    <figure style="margin:0;">
+                        <img src="figure_4gdt.jpg" alt="Defining design boundaries in Fusion 360, featuring preserved mechanical profiles and obstacle geometry">
+                        <small>Defining design boundaries in Fusion 360, featuring preserved mechanical profiles (green) and obstacle geometry (red).</small>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Advanced Materials &amp; Manufacturing</h2>
+                <p>The software simulated 140 unique design permutations across various materials and fabrication constraints. I evaluated 3 axis milling, die casting, and unrestricted additive manufacturing. The study tested aerospace grade materials including AlSi10Mg and Aluminium 6061 to find the optimal balance of yield strength and manufacturability.</p>
+            </section>
+
+            <section class="section">
+                <h2>Unprecedented Mass Reduction</h2>
+                <p>The generative design process yielded organic, highly efficient structures that maintained full structural integrity. Additive manufacturing utilizing AlSi10Mg was the recommended solution for 10 out of the 14 gears. The final optimized system achieved massive weight savings, with specific components like the Output Gear demonstrating starting 23.1 percent reduction in mass while successfully withstanding maximum operational loads.</p>
+            </section>
+
+            <section class="section">
+                <h2>Broader Industry Applications</h2>
+                <ol style="margin:0; padding-left: 1.4rem; color: var(--text-muted);">
+                    <li><strong>Aerospace &amp; Space Exploration:</strong> Lightweighting satellite brackets and payload mounts to drastically reduce launch costs.</li>
+                    <li><strong>Electric Vehicles:</strong> Optimizing motor housings and suspension links to offset battery weight and extend driving range.</li>
+                    <li><strong>Medical Engineering:</strong> Generating porous titanium bone implants mathematically tailored to individual patient biomechanics.</li>
+                    <li><strong>Industrial Robotics:</strong> Designing low inertia robotic arms and end effectors for faster, more energy efficient assembly lines.</li>
+                    <li><strong>High-Performance Motorsports:</strong> Engineering organic, stress optimized chassis components and engine mounts for racing.</li>
+                    <li><strong>Renewable Energy:</strong> Optimizing internal generator housings and mounting brackets to withstand dynamic wind turbine fatigue.</li>
+                    <li><strong>Heavy Machinery:</strong> Reducing the mass of excavator arms and lifting hooks without compromising payload capacities.</li>
+                    <li><strong>Marine Engineering:</strong> Designing hydrodynamically optimized structural frames for autonomous underwater vehicles.</li>
+                    <li><strong>Bicycle Manufacturing:</strong> 3D printing custom generative bicycle frames to maximize stiffness to weight ratios.</li>
+                    <li><strong>Consumer Electronics:</strong> Engineering generative heat sinks with complex, maximized surface areas for thermal management.</li>
+                </ol>
+            </section>
+
+            <div class="publication-card">
+                <h2>Read the full research or download the publication.</h2>
+                <p>Explore the engineering study and access the publication PDF.</p>
+                <div class="button-row">
+                    <a class="button" href="Generative Design of Car Transmission System_2.pdf" download="Generative Design of Car Transmission System_2.pdf" aria-label="View Engineering Publication">View Publication</a>
+                    <a class="button" href="Generative Design of Car Transmission System_2.pdf" download="Generative Design of Car Transmission System_2.pdf">Download PDF</a>
+                </div>
+            </div>
+
+            <nav class="project-nav" aria-label="Project navigation">
+                <a class="previous-project" href="project-two.html">
+                    <span class="nav-direction">← Previous Project</span>
+                    <span class="nav-title">Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft</span>
+                </a>
+                <a class="next-project" href="project-four.html">
+                    <span class="nav-direction">Next Project →</span>
+                    <span class="nav-title">Design Optimisation and Additive Manufacturing of an Aircraft Seat</span>
+                </a>
+            </nav>
+        </article>
+    </main>
+</body>
+</html>

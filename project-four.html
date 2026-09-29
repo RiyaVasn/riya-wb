@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#05070b">
+    <title>Design Optimisation and Additive Manufacturing of an Aircraft Seat | Riya Vasan</title>
+    <style>
+        :root {
+            --bg: #0b1016;
+            --bg-2: #111b24;
+            --card: #121d27;
+            --text: #edf3f9;
+            --muted: #b2bec9;
+            --border: rgba(255,255,255,0.12);
+            --accent: #ff8a3d;
+            --accent-2: #62a8ff;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top left, rgba(98,168,255,0.16), transparent 18%),
+                radial-gradient(circle at right bottom, rgba(255,138,61,0.12), transparent 20%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+            color: var(--text);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+        }
+
+        .page-wrap {
+            width: min(100%, 1700px);
+            margin: 0 auto;
+            padding: 18px 18px 40px;
+        }
+
+        .back-link {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: block;
+            margin-bottom: 14px;
+            padding: 10px 0;
+            background: rgba(11,16,22,0.94);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-link:hover { color: var(--accent-2); }
+
+        .project-board {
+            padding: clamp(20px, 3vw, 46px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(30,37,42,0.98), rgba(19,24,28,0.99));
+            box-shadow: 0 26px 60px rgba(0,0,0,0.3), inset 0 1px rgba(255,255,255,0.05);
+        }
+
+        .eyebrow {
+            margin: 0 0 12px;
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 1250px;
+            margin: 0;
+            font-size: clamp(2.15rem, 2vw + 1.3rem, 3.8rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .subtitle {
+            margin: 12px 0 0;
+            color: var(--accent);
+            font-size: 1.08rem;
+            font-weight: 650;
+        }
+
+        .intro {
+            max-width: 1100px;
+            margin: 16px 0 0;
+            color: var(--muted);
+            font-size: 1.02rem;
+        }
+
+        .tools-heading {
+            margin: 20px 0 10px;
+            color: var(--text);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tool {
+            padding: 6px 10px;
+            border: 1px solid rgba(98,168,255,0.3);
+            border-radius: 999px;
+            background: rgba(98,168,255,0.08);
+            color: #cfe0ff;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .section {
+            margin-top: 26px;
+            padding: clamp(18px, 2.5vw, 24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.018);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+        }
+
+        .section h2 { margin: 0 0 12px; font-size: 1.35rem; }
+        .section p { margin: 0; color: var(--muted); }
+
+        .impact-metric {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .impact-metric strong {
+            color: #808080;
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+
+        .impact-metric span {
+            color: var(--muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+            gap: clamp(20px, 4vw, 40px);
+            align-items: center;
+        }
+
+        figure { margin: 0; }
+
+        figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 520px;
+            object-fit: contain;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .seatleg-figure img {
+            width: 40%;
+            height: auto;
+            max-height: none;
+            margin: 0 auto;
+            object-fit: initial;
+            background: transparent;
+        }
+
+        .generative-figure img {
+            width: 50%;
+            height: auto;
+            max-height: none;
+            margin: 0 auto;
+            object-fit: initial;
+            background: transparent;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.86rem;
+            text-align: center;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .lattice-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .lattice-gallery figure img {
+            max-height: 360px;
+        }
+
+        .publication-card {
+            margin-top: 26px;
+            padding: 22px 18px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .publication-card h2 { margin: 0 0 10px; font-size: 1.2rem; }
+        .publication-card p { margin: 0 0 18px; color: var(--muted); }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .button,
+        .project-nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 10px 18px;
+            border: 1px solid rgba(98,168,255,0.35);
+            border-radius: 8px;
+            background: rgba(98,168,255,0.08);
+            color: var(--text);
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+
+        .button:hover,
+        .project-nav a:hover {
+            transform: translateY(-1px);
+            border-color: rgba(98,168,255,0.65);
+            background: rgba(98,168,255,0.14);
+        }
+
+        .publication-card .button {
+            min-height: 42px;
+            padding: 9px 15px;
+            border-color: rgba(255, 153, 87, 0.4);
+            border-radius: 8px;
+            color: #f2c29f;
+            background: rgba(255, 138, 61, 0.1);
+            font-size: 0.92rem;
+        }
+
+        .publication-card .button:hover {
+            border-color: rgba(255, 153, 87, 0.62);
+            background: rgba(255, 138, 61, 0.17);
+        }
+
+        .project-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .project-nav a {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 4px;
+            min-height: 0;
+            font-size: 0.92rem;
+            background: rgba(255,255,255,0.03);
+            text-align: left;
+        }
+
+        .project-nav .direction {
+            color: var(--muted);
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-nav .title { font-weight: 700; }
+
+        @media (max-width: 760px) {
+            .split,
+            .gallery,
+            .project-nav { grid-template-columns: 1fr; }
+            .lattice-gallery { grid-template-columns: 1fr; }
+            .buttons { flex-direction: column; }
+            .button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-wrap">
+        <a class="back-link" href="gemini-code-0915.html#projects">← Back to Projects</a>
+
+        <article class="project-board">
+            <header>
+                <p class="eyebrow"> Additive Manufacturing</p>
+                <h1>Design Optimisation and Additive Manufacturing of an Aircraft Seat</h1>
+                <p class="subtitle">Lightweight Structural Design for Aerospace Applications</p>
+                <p class="intro">A design optimisation study focused on reducing aircraft-seat mass through generative design, lattice structures, and additive manufacturing while preserving the strength and functional requirements of the seat assembly.</p>
+                <h2 class="tools-heading">Tools &amp; Methods</h2>
+                <div class="tools" aria-label="Tools and methods">
+                    <span class="tool">ANSYS</span>
+                    <span class="tool">Generative Design</span>
+                    <span class="tool">Topology Optimization</span>
+                    <span class="tool">Lattice Structures</span>
+                    <span class="tool">Additive Manufacturing</span>
+                    <span class="tool">FEA</span>
+                    <span class="tool">SolidWorks</span>
+                    <span class="tool">Lightweighting</span>
+                </div>
+            </header>
+
+            <section class="section split" aria-labelledby="challenge-title">
+                <div>
+                    <h2 id="challenge-title">The Lightweighting Challenge</h2>
+                    <p>Aircraft seating must meet demanding structural and safety constraints while remaining as light as possible. This work investigates how computational design and additive manufacturing can replace conventional, material-intensive geometries with efficient load-bearing structures.</p>
+                </div>
+                <figure class="seatleg-figure">
+                    <img src="figure_13_seatleg.jpg" alt="Optimized aircraft seat leg design for additive manufacturing">
+                    <figcaption>Optimized aircraft seat-leg geometry designed for lightweight additive manufacturing.</figcaption>
+                </figure>
+            </section>
+
+            <section class="section" aria-labelledby="simulation-title">
+                <h2 id="simulation-title">Structural Simulation and Design Optimization</h2>
+                <p>Finite element analysis was used to evaluate the seat structure under representative loading conditions and identify regions where material could be removed or redistributed. The resulting design process connects performance requirements to manufacturable geometry.</p>
+                <div class="gallery">
+                    <figure>
+                        <img src="figure_6_ansys.jpg" alt="ANSYS structural simulation for the optimized aircraft seat">
+                        <figcaption>ANSYS simulation used to evaluate structural performance.</figcaption>
+                    </figure>
+                    <figure class="generative-figure">
+                        <img src="figure_7_generative.jpg" alt="Generative design workflow for an aircraft seat component">
+                        <figcaption>Generative design iterations for the seat component.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="section split" aria-labelledby="lattice-title">
+                <div class="lattice-gallery">
+                    <figure>
+                        <img src="figure_10_latticing.jpg" alt="Lattice structure integrated into an aircraft seat design">
+                        <figcaption>Lattice infill strategy for reducing mass while supporting structural loads.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="figure_10_latticing2.jpg" alt="Aircraft seat cushion with an integrated lattice structure">
+                        <figcaption>Lattice structure integrated into the aircraft seat cushion.</figcaption>
+                    </figure>
+                </div>
+                <div>
+                    <h2 id="lattice-title">Lattice Structures and Additive Manufacturing</h2>
+                    <p>Lattice structures enable material to be placed where it contributes most to stiffness and strength. Their geometric freedom makes them particularly suitable for additive manufacturing, where internal architectures can be produced without the tooling limitations of conventional processes.</p>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="impact-title">
+                <h2 id="impact-title">Engineering Impact</h2>
+                <p>The study demonstrates a workflow for translating aerospace load requirements into lighter, digitally manufactured seat components. The approach can support future aircraft interiors, brackets, supports, and other parts where mass reduction directly improves operating efficiency.</p>
+                <div class="impact-metric" aria-label="Weight reduction achieved">
+                    <strong>34.10%</strong>
+                    <span>weight reduction achieved</span>
+                </div>
+            </section>
+
+            <div class="publication-card">
+                <h2>Read the full research or download the publication.</h2>
+                <p>Access the aircraft-seat design optimisation study and supporting research.</p>
+                <div class="buttons">
+                    <a class="button" href="Copy of Design Optimisation and Additive Manufacturing of an Aircraft Seat -before.pdf" download="Design Optimisation and Additive Manufacturing of an Aircraft Seat.pdf">View Publication</a>
+                </div>
+            </div>
+
+            <nav class="project-nav" aria-label="Project navigation">
+                <a href="project-three.html">
+                    <span class="direction">← Previous Project</span>
+                    <span class="title">Generative Design of a Car Transmission System</span>
+                </a>
+            </nav>
+        </article>
+    </main>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riya Vasan, MASc | Engineering Portfolio</title>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --bg-soft: #0d1217;
+            --card-bg: #11181f;
+            --text-main: #f4f7fb;
+            --text-muted: #b3bdc9;
+            --accent: #ff8a3d;
+            --accent-2: #3aa0ff;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --bg: #0b1016;
+            --bg-2: #111b24;
+            --card: #121d27;
+            --card-soft: #172430;
+            --text: #edf3f9;
+            --muted: #b2bec9;
+            --border: rgba(255,255,255,0.12);
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(98, 168, 255, 0.16), transparent 18%),
+                radial-gradient(circle at right bottom, rgba(255, 138, 61, 0.12), transparent 20%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 42px 20px 60px;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        
+        /* Header & Contact Links */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 22px;
+            margin-bottom: 48px;
+        }
+        h1 {
+            font-size: clamp(2.2rem, 4vw, 4rem);
+            margin: 0 0 12px 0;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+        .subtitle {
+            font-size: 1.08rem;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 720px;
+            line-height: 1.6;
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            align-items: center;
+        }
+        .contact-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .contact-links a:hover {
+            color: var(--accent-2);
+        }
+        .separator {
+            color: var(--border-color);
+        }
+
+        /* Project Grid */
+        .section-title {
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-left: 0;
+            padding-left: 0;
+            margin-bottom: 22px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+            margin-bottom: 40px;
+        }
+        .project-card {
+            background: linear-gradient(180deg, rgba(18, 29, 39, 0.98), rgba(14, 20, 26, 0.98));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 22px 18px;
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 12px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+        .project-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.03);
+            transform: translateY(-2px);
+        }
+        .project-title {
+            font-size: 1.12rem;
+            margin: 0 0 6px 0;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+        .project-link {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .project-link:hover {
+            color: var(--accent-2);
+        }
+        .project-context {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin: 0 0 18px 0;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .project-thumb-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 0 0 18px 0;
+        }
+        .project-thumb {
+            width: 220px;
+            max-width: 100%;
+            display: block;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+            padding: 6px;
+            box-sizing: border-box;
+        }
+        .project-figure-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            margin: 0 0 18px 0;
+        }
+        .project-figure {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+            padding: 6px;
+            box-sizing: border-box;
+        }
+        .project-figure img {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .project-three-thumb {
+            width: 25%;
+            margin: 0 auto;
+        }
+
+        .project-four-thumb {
+            flex: 0 0 70%;
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            cursor: pointer;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 0 0 20px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            color: var(--text-main);
+        }
+        .pub-link {
+            display: inline-block;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.02);
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+        .pub-link:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.15);
+            color: var(--text-main);
+        }
+
+        /* Awards & Publications List */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: rgba(13, 18, 23, 0.78);
+            padding: 16px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .list-item:hover {
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: none;
+        }
+        .list-content {
+            max-width: 85%;
+            font-size: 0.95rem;
+        }
+        .list-year {
+            color: var(--accent);
+            font-weight: bold;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+        .item-title {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+        .item-venue {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <header>
+            <h1>Riya Vasan, MASc</h1>
+            <p class="subtitle">Mechanical Engineer bridging physical additive hardware and software perception.</p>
+            
+            <div class="contact-links">
+                <a href="mailto:riya.vasan@yahoo.com"><i class="fa-solid fa-envelope"></i> riya.vasan@yahoo.com</a>
+                <span class="separator">|</span>
+                <a href="tel:+14376652643"><i class="fa-solid fa-mobile-screen"></i> +1(437)-665-2643</a>
+                <span class="separator">|</span>
+                <a href="https://www.linkedin.com/in/riyavasan" target="_blank"><i class="fa-brands fa-linkedin"></i> Riya Vasan</a>
+                <span class="separator">|</span>
+                <a href="https://github.com/RiyaVasn" target="_blank"><i class="fa-brands fa-github"></i> RiyaVasn</a>
+            </div>
+        </header>
+
+        <!-- PROJECTS SECTION -->
+        <h2 class="section-title" id="projects">Core Research & Engineering Projects</h2>
+        
+        <div class="project-grid">
+            <!-- Project 1 -->
+            <div class="project-card" data-project-url="thesis-page.html" tabindex="0" aria-label="Open Automated Micro-CT Image Segmentation and Void Analysis project">
+                <h3 class="project-title"><a href="thesis-page.html" class="project-link">Automated Micro-CT Image Segmentation and Void Analysis</a></h3>
+                <p class="project-context">Master's Thesis | York University & NYU Tandon</p>
+                <div class="project-thumb-wrap">
+                    <img src="Thumbnail_thesis.gif" alt="Animated thesis thumbnail showing micro-CT segmentation" class="project-thumb" loading="lazy" decoding="async">
+                </div>
+                <ul>
+                    <li><strong>Non-Destructive Quality Assurance:</strong> Traditional destructive testing for composite materials causes excessive waste and permanently destroys components, making it inefficient for high-value aerospace and marine parts.</li>
+                    <li><strong>Impact:</strong> The method reduces manual inspection effort while enabling scalable defect inspection and process optimization for industrial additive manufacturing.</li>
+                </ul>
+                <a href="https://doi.org/10.1016/j.matdes.2026.115538" target="_blank" rel="noopener noreferrer" class="pub-link">Read Publication: Automated Segmentation of Voids and Particles in Syntactic Foams</a>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card" data-project-url="project-two.html" tabindex="0" aria-label="Open Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft project">
+                <h3 class="project-title"><a href="project-two.html" class="project-link">Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft</a></h3>
+                <p class="project-context">Aerodynamics & CFD</p>
+                <div class="project-figure-row">
+                    <div class="project-figure">
+                        <img src="Figure_4.jpg" alt="CFD mesh for the hybrid body aircraft simulation">
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>Abstract:</strong> This paper focuses on evaluating the aerodynamic performance of a hybrid blended-body aircraft configuration through computational fluid dynamics and drag prediction analysis. The study examines how body-shape modifications influence aerodynamic resistance and supports the optimization of aircraft efficiency in the conceptual design stage.</li>
+                    <li><strong>Impact:</strong> The research connects geometry-driven aerodynamic analysis with practical design decisions for improving flight efficiency in unconventional aircraft concepts.</li>
+                </ul>
+                <a href="project-two.html" class="pub-link">View Project: Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft</a>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card" id="project-next" data-project-url="project-three.html" tabindex="0" aria-label="Open Generative Design of a Car Transmission System project">
+                <h3 class="project-title"><a href="project-three.html" class="project-link">Generative Design of a Car Transmission System</a></h3>
+                <p class="project-context">AIP Conference Proceedings</p>
+                <div class="project-figure-row">
+                    <div class="project-figure project-three-thumb">
+                        <img src="figure_2gdt.jpg" alt="Generative design study of the optimized car transmission gear">
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>Abstract:</strong> This study investigates the application of generative design to a transmission system by examining how topology optimization and design generation strategies can reduce component weight while sustaining stress and durability performance. The work integrates parametric CAD, structural simulations, and design iteration to identify more efficient load-bearing geometries.</li>
+                    <li><strong>Impact:</strong> It highlights the role of computational design in translating functional performance constraints into lighter, more manufacturable mechanical components.</li>
+                </ul>
+                <a href="project-three.html" class="pub-link">View Project: Generative Design of a Car Transmission System</a>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card" data-project-url="project-four.html" tabindex="0" aria-label="Open Design Optimisation and Additive Manufacturing of an Aircraft Seat project">
+                <h3 class="project-title"><a href="project-four.html" class="project-link">Design Optimisation and Additive Manufacturing of an Aircraft Seat</a></h3>
+                <p class="project-context">Aerospace Lightweighting &amp; Additive Manufacturing</p>
+                <div class="project-figure-row">
+                    <div class="project-figure project-four-thumb">
+    
+                        <img src="figure11_project4.jpg" alt="Optimized aircraft seat leg designed for additive manufacturing">
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>Abstract:</strong> This study explores generative design, finite element analysis, and lattice structures to reduce aircraft-seat mass while maintaining structural performance and additive-manufacturing feasibility.</li>
+                    <li><strong>Impact:</strong> The workflow achieved a weight reduction</strong> while placing material according to real aerospace load paths.</li>
+                </ul>
+                <a href="project-four.html" class="pub-link">View Project: Design Optimisation and Additive Manufacturing of an Aircraft Seat</a>
+            </div>
+
+        </div>
+
+        <!-- AWARDS & PUBLICATIONS SECTION -->
+        <h2 class="section-title">Awards & Publications</h2>
+
+        <div class="list-container">
+            
+            <!-- Award 1 -->
+            <div class="list-item">
+                <div class="list-content">
+                    <span class="item-title"><i class="fa-solid fa-trophy" style="color: var(--accent); margin-right: 8px;"></i> MASc Excellence Award for Graduate Research,</span> 
+                    <span class="item-venue">York University</span>
+                </div>
+                <div class="list-year">2024</div>
+            </div>
+
+            <!-- Award 2 -->
+            <div class="list-item">
+                <div class="list-content">
+                    <span class="item-title"><i class="fa-solid fa-award" style="color: var(--accent); margin-right: 8px;"></i> Mitacs Globalink Research Award,</span> 
+                    <span class="item-venue">New York University (Host Institution)</span>
+                </div>
+                <div class="list-year">2024</div>
+            </div>
+
+            <!-- Publication 1 -->
+            <div class="list-item">
+                <div class="list-content">
+                    <span class="item-title"><i class="fa-solid fa-book" style="color: var(--accent); margin-right: 8px;"></i> “Automated Segmentation of Voids and Particles in Syntactic Foams Using &mu;CT & K-Means,”</span> 
+                    <span class="item-venue">Materials & Design, Elsevier</span>
+                </div>
+                <div class="list-year">2025</div>
+            </div>
+
+            <!-- Publication 3 -->
+            <div class="list-item">
+                <div class="list-content">
+                    <span class="item-title"><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> “Generative Design of a Car Transmission System,”</span> 
+                    <span class="item-venue">AIP Conf. Proc., Vol. 2788, 100004</span>
+                </div>
+                <div class="list-year">2023</div>
+            </div>
+
+            <!-- Publication 4 -->
+            <div class="list-item">
+                <div class="list-content">
+                    <span class="item-title"><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> “Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft,”</span> 
+                    <span class="item-venue">Mechanics and Adv. Tech., Vol. 7, No. 3</span>
+                </div>
+                <div class="list-year">2023</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll('.project-card').forEach((card) => {
+            const projectLink = card.querySelector('.project-link, .pub-link');
+            const projectUrl = card.dataset.projectUrl || projectLink?.getAttribute('href');
+            if (!projectUrl) return;
+
+            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+
+            card.addEventListener('click', (event) => {
+                if (event.target.closest('a, button')) return;
+                window.location.href = projectUrl;
+            });
+
+            card.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+                event.preventDefault();
+                window.location.href = projectUrl;
+            });
+        });
+    </script>
+
+</body>
+</html>
