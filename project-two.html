@@ -310,58 +310,34 @@
             margin-top: 20px;
         }
 
-        .article-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 44px;
-            margin-top: 0;
-            padding: 10px 17px;
-            border: 1px solid rgba(58, 160, 255, 0.3);
-            border-radius: 8px;
-            background: rgba(58, 160, 255, 0.08);
-            color: #dfeeff;
+        .publication-card {
+            margin-top: 26px;
+            padding: 22px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .publication-card h2 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .publication-card p {
+            margin: 0 0 18px;
+            color: var(--text-muted);
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .publication-card .button {
             font-weight: 700;
             text-decoration: none;
-            transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
-        }
-
-        .article-link:hover {
-            transform: translateY(-1px);
-            border-color: rgba(58, 160, 255, 0.6);
-            background: rgba(58, 160, 255, 0.14);
-        }
-
-        .article-link.secondary {
-            border-color: var(--border-color);
-            background: rgba(255,255,255,0.03);
-            color: var(--text-main);
-        }
-
-        .article-link.secondary:hover {
-            border-color: rgba(58, 160, 255, 0.5);
-            background: rgba(58, 160, 255, 0.08);
-        }
-
-        .article-link {
-            min-height: 42px;
-            padding: 9px 15px;
-            border-color: rgba(255, 153, 87, 0.4);
-            border-radius: 8px;
-            color: #f2c29f;
-            background: rgba(255, 138, 61, 0.1);
-            font-size: 0.92rem;
-        }
-
-        .article-link:hover {
-            border-color: rgba(255, 153, 87, 0.62);
-            background: rgba(255, 138, 61, 0.17);
-        }
-
-        .article-link.secondary {
-            border-color: rgba(255, 153, 87, 0.4);
-            color: #f2c29f;
-            background: rgba(255, 138, 61, 0.1);
         }
 
         .project-nav {
@@ -409,6 +385,8 @@
             .content-section { margin-top: 14px; padding: 18px 15px; }
             .section-grid figure { width: 100%; }
             .application-grid { grid-template-columns: 1fr; gap: 0; }
+            .button-row { flex-direction: column; }
+            .button { width: 100%; }
             .project-nav { grid-template-columns: 1fr; }
             .project-nav .next-project { text-align: left; }
         }
@@ -515,11 +493,14 @@
             </ul>
         </section>
 
-        <footer class="project-footer">
-            <div class="footer-actions">
-                <a class="article-link secondary" href="https://journal.mmi.kpi.ua/article/download/284872/289561" download="# Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft.pdf" target="_blank" rel="noopener noreferrer">View Publication</a>
+        <section class="publication-card" aria-labelledby="publication-title">
+            <h2 id="publication-title">Read the full research or download the publication.</h2>
+            <p>Explore the engineering study and access the publication PDF.</p>
+            <div class="button-row">
+                <a class="button" href="https://journal.mmi.kpi.ua/article/download/284872/289561" target="_blank" rel="noopener noreferrer" aria-label="View Aircraft Design Publication">View Publication</a>
+                <a class="button" href="https://journal.mmi.kpi.ua/article/download/284872/289561" download="Prediction of Drag Coefficient of a Hybrid Body Design of Aircraft.pdf">Download PDF</a>
             </div>
-        </footer>
+        </section>
 
         <nav class="project-nav" aria-label="Project navigation">
             <a href="thesis-page.html">
