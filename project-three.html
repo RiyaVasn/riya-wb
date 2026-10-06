@@ -335,6 +335,32 @@
             margin-bottom: 0;
         }
 
+        .application-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0 28px;
+            margin: 18px 0 0;
+            padding: 0;
+            list-style: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .application-grid li {
+            position: relative;
+            padding: 13px 0 13px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .application-grid li::before {
+            position: absolute;
+            left: 2px;
+            color: var(--accent);
+            content: "•";
+        }
+
+        .application-grid strong { color: var(--text-main); }
+
         img {
             max-width: 100%;
             height: auto;
@@ -465,6 +491,7 @@
             .project-page { padding: 16px; }
             .button-row { flex-direction: column; }
             .button { width: 100%; }
+            .application-grid { grid-template-columns: 1fr; gap: 0; }
             .project-nav { grid-template-columns: 1fr; }
             .project-nav .previous-project { grid-column: auto; }
             .project-nav .next-project { grid-column: auto; text-align: left; }
@@ -562,7 +589,7 @@
 
             <section class="section">
                 <h2>Broader Industry Applications</h2>
-                <ol style="margin:0; padding-left: 1.4rem; color: var(--text-muted);">
+                <ul class="application-grid">
                     <li><strong>Aerospace &amp; Space Exploration:</strong> Lightweighting satellite brackets and payload mounts to drastically reduce launch costs.</li>
                     <li><strong>Electric Vehicles:</strong> Optimizing motor housings and suspension links to offset battery weight and extend driving range.</li>
                     <li><strong>Medical Engineering:</strong> Generating porous titanium bone implants mathematically tailored to individual patient biomechanics.</li>
@@ -573,7 +600,7 @@
                     <li><strong>Marine Engineering:</strong> Designing hydrodynamically optimized structural frames for autonomous underwater vehicles.</li>
                     <li><strong>Bicycle Manufacturing:</strong> 3D printing custom generative bicycle frames to maximize stiffness to weight ratios.</li>
                     <li><strong>Consumer Electronics:</strong> Engineering generative heat sinks with complex, maximized surface areas for thermal management.</li>
-                </ol>
+                </ul>
             </section>
 
             <div class="publication-card">
