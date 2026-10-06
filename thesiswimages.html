@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Micro-CT Image Segmentation | Riya Vasan</title>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --bg-soft: #0d1217;
+            --card-bg: #11181f;
+            --text-main: #f4f7fb;
+            --text-muted: #b3bdc9;
+            --accent: #ff8a3d;
+            --accent-2: #3aa0ff;
+            --border-color: rgba(255, 255, 255, 0.12);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #05070b;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .back-nav {
+            margin-bottom: 30px;
+        }
+        .back-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+        .back-nav a:hover {
+            color: var(--accent-2);
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: clamp(2.3rem, 4vw, 4rem);
+            line-height: 1.12;
+            letter-spacing: -0.04em;
+            margin: 0 0 18px 0;
+            color: #e9edf4;
+            font-weight: 700;
+        }
+        .meta-info {
+            color: #a9c7e7;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.4vw, 1.5rem);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .meta-info i {
+            margin-right: 8px;
+        }
+        
+        /* Image Display */
+        .hero-image {
+            margin-top: 44px;
+            margin-bottom: 40px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            min-height: 340px;
+            box-sizing: border-box;
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+        .hero-image.missing {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 360px;
+            background: rgba(255,255,255,0.02);
+            color: rgba(255,255,255,0.76);
+            border: 1px dashed rgba(255,255,255,0.18);
+            font-weight: 600;
+            font-size: clamp(1.2rem, 2vw, 2.2rem);
+            text-align: center;
+            padding: 20px;
+        }
+        .methodology-figure {
+            width: 50%;
+            margin: 18px auto 10px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.02);
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .methodology-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+        .methodology-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 18px;
+            margin: 18px 0 10px;
+        }
+        .methodology-row .methodology-figure {
+            width: calc(50% - 9px);
+            margin: 0;
+            flex: 0 0 calc(50% - 9px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(17, 24, 31, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .content-section h2 {
+            color: #c8d3e0;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .content-section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Tech Stack Tags */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .tech-tag {
+            background: rgba(58, 160, 255, 0.1);
+            color: var(--accent-2);
+            border: 1px solid rgba(58, 160, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .next-project-wrap {
+            display: flex;
+            justify-content: flex-end;
+            margin: 32px 0 16px;
+        }
+        .next-project {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(17, 24, 31, 0.88);
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .next-project:hover {
+            transform: translateX(8px);
+            border-color: rgba(58, 160, 255, 0.8);
+            box-shadow: 0 0 18px rgba(58, 160, 255, 0.14);
+        }
+        .next-project i {
+            transition: transform 0.25s ease;
+        }
+        .next-project:hover i {
+            transform: translateX(6px);
+        }
+        .figure-block {
+            margin: 28px 0 18px;
+        }
+        .figure-image {
+            width: 100%;
+            display: block;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .figure-image + .figure-image {
+            margin-top: 26px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--accent-2);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #2a88e5;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Back Navigation -->
+        <div class="back-nav">
+            <a href="gemini-code-0915.html"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <h1>Automated Micro-CT Image Segmentation and Void Analysis</h1>
+            <div class="meta-info">
+                <span><i class="fa-solid fa-graduation-cap"></i> Master's Thesis</span>
+                <span style="color: var(--border-color);">|</span>
+                <span><i class="fa-solid fa-building-columns"></i> York University & NYU Tandon</span>
+            </div>
+        </header>
+
+        <!-- Graphical Abstract Image -->
+        <div class="hero-image" id="heroImage">
+            <img src="Graphical Abstract Thesis.png" alt="Graphical Abstract of Automated Segmentation of Voids and Particles in HDPE-HGM Syntactic Foams">
+        </div>
+
+        <div class="methodology-row">
+            <div class="methodology-figure">
+                <img src="Methodology Thesis.png" alt="Methodology figure for micro-CT image segmentation workflow">
+            </div>
+            <div class="methodology-figure">
+                <img src="Methodology Thesis 2.png" alt="Second methodology figure for micro-CT image segmentation workflow">
+            </div>
+        </div>
+
+        <!-- Project Details -->
+        <div class="content-section">
+            <h2>Non-Destructive Quality Assurance</h2>
+            <p>Traditional destructive testing for composite materials causes excessive waste and permanently destroys components. This makes it inefficient for high-value aerospace and marine parts.</p>
+
+            <h2>Computer Vision & Unsupervised Automation</h2>
+            <p>An automated inspection framework uses micro-CT imaging and unsupervised machine learning to non-destructively analyze syntactic foams. A neighborhood-guided K-means clustering algorithm segments matrices, particles, and voids without manual training data. The model achieves a 0.92 F1 score for void detection.</p>
+
+            <h2>Morphological & Spatial Analytics</h2>
+            <p>The pipeline extracts 2D and 3D geometric descriptors to separate process-induced raster defects from hollow glass microsphere cavities. Nearest neighbor distance and spatial orientation tensors quantify void distribution and clustering behaviors across varied manufacturing densities.</p>
+
+            <h2>Engineering Impact & Results</h2>
+            <p>Geometric and spatial metrics correlate directly with Ultimate Tensile Strength and Young's Modulus. This establishes a scalable digital twin framework for automated defect inspection and process optimization in industrial additive manufacturing.</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">OpenCV</span>
+                <span class="tech-tag">Scikit-Learn</span>
+                <span class="tech-tag">PyVista</span>
+                <span class="tech-tag">K-Means Clustering</span>
+                <span class="tech-tag">Micro-CT</span>
+            </div>
+
+            <div class="action-buttons">
+                <a href="https://github.com/RiyaVasn" target="_blank" class="btn btn-primary">
+                    <i class="fa-brands fa-github"></i> View Repository
+                </a>
+                <a href="https://doi.org/10.1016/j.matdes.2026.115538" target="_blank" class="btn btn-secondary">
+                    <i class="fa-solid fa-file-lines"></i> Read Publication
+                </a>
+            </div>
+        </div>
+
+        <div class="next-project-wrap">
+            <a href="gemini-code-0915.html#project-next" class="next-project">
+                <span>Next project</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
