@@ -1,28 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#202124"><meta name="description" content="Small Ring Test capstone: finite element simulation and material parameter fitting for SS316L using Abaqus and the Ramberg–Osgood model.">
-<title>Small Ring Test Capstone | Riya Vasan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#202124">
+    <title>Small Ring Test Capstone | Riya Vasan</title>
+    <style>
+        :root {
+            --bg: #0b1016;
+            --bg-2: #111b24;
+            --card: #121d27;
+            --text: #edf3f9;
+            --muted: #b2bec9;
+            --border: rgba(255,255,255,0.12);
+            --accent: #ff8a3d;
+            --accent-2: #62a8ff;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top left, rgba(98,168,255,0.16), transparent 18%),
+                radial-gradient(circle at right bottom, rgba(255,138,61,0.12), transparent 20%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+            color: var(--text);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+        }
+
+        .page-wrap {
+            width: min(100%, 1700px);
+            margin: 0 auto;
+            padding: 18px 18px 40px;
+        }
+
+        .back-link {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: block;
+            margin-bottom: 14px;
+            padding: 10px 0;
+            background: rgba(11,16,22,0.94);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-link:hover { color: var(--accent-2); }
+
+        .project-board {
+            padding: clamp(20px, 3vw, 46px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(30,37,42,0.98), rgba(19,24,28,0.99));
+            box-shadow: 0 26px 60px rgba(0,0,0,0.3), inset 0 1px rgba(255,255,255,0.05);
+        }
+
+        .eyebrow {
+            margin: 0 0 12px;
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 1250px;
+            margin: 0;
+            font-size: clamp(2.15rem, 2vw + 1.3rem, 3.8rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .subtitle {
+            margin: 12px 0 0;
+            color: var(--accent);
+            font-size: 1.08rem;
+            font-weight: 650;
+        }
+
+        .intro {
+            max-width: 1100px;
+            margin: 16px 0 0;
+            color: var(--muted);
+            font-size: 1.02rem;
+        }
+
+        .tools-heading {
+            margin: 20px 0 10px;
+            color: var(--text);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tool {
+            padding: 6px 10px;
+            border: 1px solid rgba(98,168,255,0.3);
+            border-radius: 999px;
+            background: rgba(98,168,255,0.08);
+            color: #cfe0ff;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .section {
+            margin-top: 26px;
+            padding: clamp(18px, 2.5vw, 24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.018);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+        }
+
+        .section h2 { margin: 0 0 12px; font-size: 1.35rem; }
+        .section p { margin: 0; color: var(--muted); }
+
+        .impact-metric {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .impact-metric strong {
+            color: #808080;
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+
+        .impact-metric span {
+            color: var(--muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+            gap: clamp(20px, 4vw, 40px);
+            align-items: center;
+        }
+
+        figure { margin: 0; }
+
+        figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 520px;
+            object-fit: contain;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        figcaption {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.86rem;
+            text-align: center;
+        }
+
+        .lattice-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .lattice-gallery figure img {
+            max-height: 360px;
+        }
+
+        .publication-card {
+            margin-top: 26px;
+            padding: 22px 18px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .publication-card h2 { margin: 0 0 10px; font-size: 1.2rem; }
+        .publication-card p { margin: 0 0 18px; color: var(--muted); }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .button,
+        .project-nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 10px 18px;
+            border: 1px solid rgba(98,168,255,0.35);
+            border-radius: 8px;
+            background: rgba(98,168,255,0.08);
+            color: var(--text);
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+
+        .button:hover,
+        .project-nav a:hover {
+            transform: translateY(-1px);
+            border-color: rgba(98,168,255,0.65);
+            background: rgba(98,168,255,0.14);
+        }
+
+        .publication-card .button {
+            min-height: 42px;
+            padding: 9px 15px;
+            border-color: rgba(255, 153, 87, 0.4);
+            border-radius: 8px;
+            color: #f2c29f;
+            background: rgba(255, 138, 61, 0.1);
+            font-size: 0.92rem;
+        }
+
+        .publication-card .button:hover {
+            border-color: rgba(255, 153, 87, 0.62);
+            background: rgba(255, 138, 61, 0.17);
+        }
+
+        .project-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .project-nav a {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 4px;
+            min-height: 0;
+            font-size: 0.92rem;
+            background: rgba(255,255,255,0.03);
+            text-align: left;
+        }
+
+        .project-nav .direction {
+            color: var(--muted);
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-nav .title { font-weight: 700; }
+
+        @media (max-width: 760px) {
+            .split,
+            .project-nav { grid-template-columns: 1fr; }
+            .lattice-gallery { grid-template-columns: 1fr; }
+            .buttons { flex-direction: column; }
+            .button { width: 100%; }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio-project-theme.css">
 <style>
-:root{--ink:#202124;--muted:#696b70;--pink:#fb2056;--line:#dedfe2}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;color:var(--ink);background:white;font:16px/1.75 'Noto Sans',sans-serif}a{color:inherit;text-underline-offset:5px}a:hover{color:var(--pink)}header{padding:22px max(24px,calc((100% - 1120px)/2));display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line);background:white;position:sticky;top:0;z-index:10}header a{font-size:.8rem;font-weight:700;text-decoration:none}nav{display:flex;gap:22px;flex-wrap:wrap}.wrap{width:min(1120px,calc(100% - 48px));margin:auto}h1,h2,h3{font-family:'Montserrat',sans-serif;line-height:1.2}h1{font-size:clamp(36px,5vw,62px);letter-spacing:-.045em;margin:15px 0 25px}h1 span{color:var(--pink)}h2{font-size:30px;letter-spacing:-.03em;margin:0 0 22px}h3{font-size:19px;margin:0 0 10px}.eyebrow{color:var(--pink);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700}.lead{max-width:700px;font-size:1.1rem;color:var(--muted)}.hero{padding:64px 0 38px}.hero figure{margin:36px 0 0}.hero img{width:100%;max-height:620px;object-fit:contain;display:block;background:#203249}figcaption{color:var(--muted);font-size:.8rem;margin-top:10px}section{padding:48px 0;border-top:1px solid var(--line)}.split{display:grid;grid-template-columns:1fr 1.5fr;gap:70px}.split p{margin:0 0 20px;color:var(--muted)}.method{display:grid;grid-template-columns:repeat(3,1fr);gap:35px;margin-top:28px}.method article{border-top:3px solid var(--pink);padding-top:20px}.method p{color:var(--muted);font-size:.92rem}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}.gallery figure{margin:0}.gallery img{width:100%;display:block;background:#203249}.gallery a{display:block}.note{border-left:3px solid var(--pink);padding:12px 22px;background:#f4f4f5;color:var(--muted);font-size:.87rem;margin-top:26px}.downloads{display:flex;flex-wrap:wrap;gap:14px 30px}.downloads a{font-size:.9rem}footer{padding:28px 0 40px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line)}a:focus-visible{outline:2px solid var(--pink);outline-offset:5px}@media(max-width:720px){header{padding:18px;flex-wrap:wrap;gap:12px}nav{gap:16px}.wrap{width:calc(100% - 36px)}.hero{padding-top:38px}.split,.method,.gallery{grid-template-columns:1fr;gap:24px}section{padding:34px 0}h2{font-size:26px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-th,td{padding:16px 12px;border-bottom:1px solid var(--line)}th{background:#f4f4f5}</style></head>
-<body>
-<header><a href="./#about">RIYA VASAN / ENGINEERING</a><nav aria-label="Portfolio"><a href="./#about">About Me</a><a href="./#projects">Projects</a><a href="./#experience">Experience</a><a href="./#awards">Awards</a><a href="./#contact">Contact</a></nav></header>
-<main class="wrap">
-<div class="hero"><a href="./#capstone">&larr; Back to projects</a><p class="eyebrow">05 / Undergraduate Capstone · VIT Chennai · 2023</p><h1>Small specimen.<br><span>Material insights.</span></h1><h2>Material Model for Small Ring Tested SS316L Using Machine Learning</h2><p class="lead">My undergraduate capstone combined Abaqus finite element analysis with Support Vector Regression to predict the mechanical properties of stainless steel 316L from miniature ring testing.</p><figure><img src="assets/capstone/cp-elastoplastic-s22.png" alt="Abaqus S22 stress contour showing a curved ring specimen deforming around a rigid loading pin" width="1351" height="868"><figcaption>Elastoplastic model: S22 stress distribution in the ring and its contact with the loading pin.</figcaption></figure></div>
-<section class="split"><div><p class="eyebrow">The challenge</p><h2>Testing when material is limited</h2></div><div><p>Conventional tensile tests require enough material to manufacture a standard specimen. The Small Ring Test offers an alternative for miniature samples, with potential applications in nuclear and aerospace materials testing.</p><p>This capstone explored the relationship between ring deformation, stress distribution, and the material properties inferred from experimental testing. The analysis compared the ring response with uniaxial tensile data.</p></div></section>
-<section><p class="eyebrow">Simulation workflow</p><h2>Connecting the model to measured behaviour</h2><div class="method"><article><h3>Finite element model</h3><p>The model used Abaqus C3D20R quadratic, reduced-integration elements for the ring and R3D4 elements for rigid pins. Symmetry constraints and prescribed pin displacement represented the loading setup.</p></article><article><h3>Material response</h3><p>Elastic and elastoplastic studies examined the stress fields. A Ramberg–Osgood fit provided a baseline for estimating tensile strength, yield strength, and Young’s modulus.</p></article><article><h3>Machine learning</h3><p>I used Support Vector Regression to estimate material properties from the stress–strain response. The simulation supplied a database of load–displacement values, and predictions were compared with experimental reference values.</p></article></div></section>
-<section id="stress-results"><p class="eyebrow">Abaqus visualisation</p><h2>Stress fields across the model variants</h2><p class="lead">These original contour exports show the ring under different material-model settings. Open an image to inspect the mesh and contour legend at full size.</p><div class="gallery">
+.capstone-method { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; margin-top:20px; }
+.capstone-method h3 { font-size:1rem; margin:0 0 10px; }
+.section .lead { margin-bottom:20px; }
+.section .note { margin:20px 0; font-size:.86rem; }
+.section .lattice-gallery + p { margin-top:20px; }
+.capstone-table { overflow-x:auto; margin:20px 0; }
+.capstone-table table { width:100%; border-collapse:collapse; text-align:left; font-size:.9rem; }
+.capstone-table th,.capstone-table td { padding:14px 12px; border-bottom:1px solid var(--line); }
+.capstone-table th { background:var(--soft); }
+a:focus-visible { outline:2px solid var(--pink); outline-offset:4px; }
+@media(max-width:760px) { .capstone-method { grid-template-columns:1fr; } }
+</style>
+</head>
+<body><main class="page-wrap"><a class="back-link" href="./#projects">← Back to Projects</a><article class="project-board"><header><p class="eyebrow">Undergraduate Capstone | VIT Chennai | 2023</p>
+<h1>Material Modelling of SS316L Using Machine Learning</h1>
+<p class="subtitle">Small Ring Testing, Abaqus FEA, and Support Vector Regression</p>
+<p class="intro">My undergraduate capstone combined Abaqus finite element analysis with Support Vector Regression to predict the mechanical properties of stainless steel 316L from miniature ring testing.</p>
+<h2 class="tools-heading">Tools &amp; Methods</h2>
+<div class="tools" aria-label="Tools and methods">
+<span class="tool">Abaqus</span><span class="tool">Python</span><span class="tool">Support Vector Regression</span><span class="tool">Ramberg–Osgood Model</span><span class="tool">Finite Element Analysis</span><span class="tool">Material Characterisation</span>
+</div></header><section class="section split"><div>
+<h2>Testing when material is limited</h2>
+<p>Conventional tensile tests require enough material to manufacture a standard specimen. The Small Ring Test offers an alternative for miniature samples, with potential applications in nuclear and aerospace materials testing.</p>
+<p>This capstone explored the relationship between ring deformation, stress distribution, and the material properties inferred from experimental testing. The analysis compared the ring response with uniaxial tensile data.</p>
+</div>
+<figure><img src="assets/capstone/cp-elastoplastic-s22.png" alt="Abaqus S22 stress contour showing a curved ring specimen deforming around a rigid loading pin" width="1351" height="868"><figcaption>Elastoplastic model: S22 stress distribution in the ring and its contact with the loading pin.</figcaption></figure></section><section class="section"><h2>Connecting the model to measured behaviour</h2>
+<div class="capstone-method">
+<article><h3>Finite element model</h3>
+<p>The model used Abaqus C3D20R quadratic, reduced-integration elements for the ring and R3D4 elements for rigid pins. Symmetry constraints and prescribed pin displacement represented the loading setup.</p></article><article><h3>Material response</h3>
+<p>Elastic and elastoplastic studies examined the stress fields. A Ramberg–Osgood fit provided a baseline for estimating tensile strength, yield strength, and Young’s modulus.</p></article><article><h3>Machine learning</h3>
+<p>I used Support Vector Regression to estimate material properties from the stress–strain response. The simulation supplied a database of load–displacement values, and predictions were compared with experimental reference values.</p></article>
+</div></section>
+<section id="stress-results" class="section"><h2>Stress fields across the model variants</h2>
+<p class="lead">These original contour exports show the ring under different material-model settings. Open an image to inspect the mesh and contour legend at full size.</p>
+<div class="lattice-gallery">
 <figure><a href="assets/capstone/cp-elastic-s22.png"><img src="assets/capstone/cp-elastic-s22.png" loading="lazy" alt="Elastic ring model S22 stress contour"></a><figcaption>Elastic model · S22</figcaption></figure>
 <figure><a href="assets/capstone/cp-elastic-smaxabs.png"><img src="assets/capstone/cp-elastic-smaxabs.png" loading="lazy" alt="Elastic ring model maximum absolute principal stress contour"></a><figcaption>Elastic model · maximum absolute principal stress</figcaption></figure>
 <figure><a href="assets/capstone/cp-elastoplastic-s22.png"><img src="assets/capstone/cp-elastoplastic-s22.png" loading="lazy" alt="Elastoplastic ring model S22 stress contour"></a><figcaption>Elastoplastic model · S22</figcaption></figure>
 <figure><a href="assets/capstone/cp-elastoplastic-smaxpabs.png"><img src="assets/capstone/cp-elastoplastic-smaxpabs.png" loading="lazy" alt="Elastoplastic ring model maximum absolute principal stress contour"></a><figcaption>Elastoplastic model · maximum absolute principal stress</figcaption></figure>
 <figure><a href="assets/capstone/cp-n-s22.png"><img src="assets/capstone/cp-n-s22.png" loading="lazy" alt="Additional ring model variant S22 stress contour"></a><figcaption>Additional model variant · S22</figcaption></figure>
 <figure><a href="assets/capstone/cp-n-smaxabs.png"><img src="assets/capstone/cp-n-smaxabs.png" loading="lazy" alt="Additional ring model variant maximum absolute principal stress contour"></a><figcaption>Additional model variant · maximum absolute principal stress</figcaption></figure>
-</div><p class="note">Each image retains its original contour scale. Colours should be interpreted against that image's legend rather than used alone to compare stress magnitudes across variants.</p></section>
-<section><p class="eyebrow">Capstone results</p><h2>Material properties: measured and predicted</h2><p class="lead">The final report compares experimental reference values with Ramberg–Osgood fitting and the machine learning model.</p><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;text-align:left;font-size:.9rem"><thead><tr><th>Property</th><th>Experimental</th><th>Ramberg–Osgood</th><th>Machine learning</th></tr></thead><tbody><tr><td>Ultimate tensile strength (MPa)</td><td>600</td><td>600.27</td><td>608.24</td></tr><tr><td>Young’s modulus (GPa)</td><td>193.5</td><td>193.347</td><td>193.500</td></tr><tr><td>Yield strength (MPa)</td><td>450</td><td>449.9</td><td>440.61</td></tr></tbody></table></div><p class="note">Calculated from Table 2 in the report: machine learning predictions differ from the reference values by approximately 1.37% for tensile strength and 2.09% for yield strength, with Young’s modulus closely matching the reference. The Ramberg–Osgood values differ by less than 0.1% for these three properties. These comparisons describe the reported dataset.</p><div class="gallery"><figure><a href="assets/capstone/fit-000.png"><img src="assets/capstone/fit-000.png" loading="lazy" alt="Ramberg–Osgood fitted stress–strain curve and predicted properties from the capstone report"></a><figcaption>Ramberg–Osgood fitting · Figure 15 in the capstone report</figcaption></figure><figure><a href="assets/capstone/fit-001.png"><img src="assets/capstone/fit-001.png" loading="lazy" alt="Support Vector Regression prediction curve and material properties from the capstone report"></a><figcaption>Machine learning prediction · Figure 16 in the capstone report</figcaption></figure></div><p>The misalignment study also compared von Mises stress values of 653.4 MPa and 643.3 MPa, a change of approximately 1.5% for the tested configuration.</p></section>
-</main><footer><div class="wrap">Riya Vasan · Mechanical Engineering &nbsp; <a href="./#projects">Back to portfolio</a></div></footer>
-</body></html>
+</div>
+<p class="note">Each image retains its original contour scale. Colours should be interpreted against that image's legend rather than used alone to compare stress magnitudes across variants.</p></section>
+<section class="section"><h2>Material properties: measured and predicted</h2>
+<p class="lead">The final report compares experimental reference values with Ramberg–Osgood fitting and the machine learning model.</p>
+<div class="capstone-table"><table>
+<thead><tr>
+<th>Property</th>
+<th>Experimental</th>
+<th>Ramberg–Osgood</th>
+<th>Machine learning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Ultimate tensile strength (MPa)</td>
+<td>600</td>
+<td>600.27</td>
+<td>608.24</td>
+</tr>
+<tr>
+<td>Young’s modulus (GPa)</td>
+<td>193.5</td>
+<td>193.347</td>
+<td>193.500</td>
+</tr>
+<tr>
+<td>Yield strength (MPa)</td>
+<td>450</td>
+<td>449.9</td>
+<td>440.61</td>
+</tr>
+</tbody>
+</table></div>
+<p class="note">Calculated from Table 2 in the report: machine learning predictions differ from the reference values by approximately 1.37% for tensile strength and 2.09% for yield strength, with Young’s modulus closely matching the reference. The Ramberg–Osgood values differ by less than 0.1% for these three properties. These comparisons describe the reported dataset.</p>
+<div class="lattice-gallery">
+<figure><a href="assets/capstone/fit-000.png"><img src="assets/capstone/fit-000.png" loading="lazy" alt="Ramberg–Osgood fitted stress–strain curve and predicted properties from the capstone report"></a><figcaption>Ramberg–Osgood fitting · Figure 15 in the capstone report</figcaption></figure><figure><a href="assets/capstone/fit-001.png"><img src="assets/capstone/fit-001.png" loading="lazy" alt="Support Vector Regression prediction curve and material properties from the capstone report"></a><figcaption>Machine learning prediction · Figure 16 in the capstone report</figcaption></figure>
+</div>
+<p>The misalignment study also compared von Mises stress values of 653.4 MPa and 643.3 MPa, a change of approximately 1.5% for the tested configuration.</p></section>
+<nav class="project-nav" aria-label="Project navigation"><a href="project-four.html"><span class="direction">← Previous Project</span><span class="title">Wind Powered Lighting &amp; Charging Units</span></a><a href="./#projects"><span class="direction">All Projects</span><span class="title">Back to Portfolio →</span></a></nav></article></main></body>
+</html>
