@@ -304,7 +304,7 @@
                 <p class="eyebrow">Dassault Systèmes Foundation | MBSE</p>
                 <h1>Wind Powered Lighting &amp; Charging Units</h1>
                 <p class="subtitle">Autonomous Highway Infrastructure powered by Maglev VAWTs and Solar Microgrids</p>
-                <p class="intro">An integrated, off-grid solution designed to place autonomous lighting and charging units every 20 km along highways. By capturing traffic-induced wind turbulence and solar energy, the system independently powers smart lighting and provides scalable EV charging.</p>
+                <p class="intro">An integrated, off-grid solution designed to place autonomous lighting and charging units every 20 km along highways. The concept combines traffic-induced wind and solar energy for lighting and explores EV charging; achievable loads and autonomy require a site-specific energy budget.</p>
                 <h2 class="tools-heading">Tools &amp; Methods</h2>
                 <div class="tools" aria-label="Tools and methods">
                     <span class="tool">ANSYS Fluent</span>
@@ -321,7 +321,7 @@
             <section class="section split" aria-labelledby="challenge-title">
                 <div>
                     <h2 id="challenge-title">The Autonomous Infrastructure Challenge</h2>
-                    <p>Modern highway networks consume substantial energy for illumination, while the growth of electric vehicles is limited by gaps in rural charging access. To reduce grid dependency, this project uses a Model-Based Systems Engineering (MBSE) approach to design a self-sustaining assembly that combines a 1.6 m² gallium arsenide solar panel with a high-efficiency vertical-axis wind turbine.</p>
+                    <p>Modern highway networks consume substantial energy for illumination, while the growth of electric vehicles is limited by gaps in rural charging access. To reduce grid dependency, this project uses a Model-Based Systems Engineering (MBSE) approach to develop a hybrid assembly combining solar PV with a vertical-axis wind turbine. The original concept specifies a 1.6 m² gallium arsenide (GaAs) array, but its technology, installed panel count, area, and rated power require confirmation against manufacturer datasheets.</p>
                 </div>
                 <figure>
                     <img src="main_assembly.jpg" alt="CAD Render of the highway light pole featuring the solar panel and Savonius turbine">
@@ -334,7 +334,7 @@
                 <p>To coordinate the mechanical, electrical, and environmental subsystems, a top-down Model-Based Systems Engineering (MBSE) architecture defined the structural analysis requirements, turbine-blade optimization goals, and material selections linking the Savonius rotor to the microgrid charging units.</p>
                 <figure>
                     <img src="overview.jpg" alt="Systems architecture diagram mapping the structural, material, and power parameters for the turbine, solar panel, and pole">
-                    <figcaption>MBSE overview detailing the 1.44 kWh/day solar generation, smart lighting parameters, and subsystem dependencies.</figcaption>
+                    <figcaption>Original MBSE concept diagram showing subsystem dependencies and an unreconciled 1.44 kWh/day solar estimate. See the solar energy budget below for the corrected sizing assumptions.</figcaption>
                 </figure>
             </section>
 
@@ -369,16 +369,23 @@
                 <p>Resonance screening requires comparing these natural frequencies with the operating excitation spectrum. Modal analysis alone does not establish actual vibration amplitudes or fatigue life; forced-response analysis or experimental vibration measurements would be needed for that assessment.</p>
             </section>
 
+            <section class="section" aria-labelledby="solar-budget-title">
+                <h2 id="solar-budget-title">Solar Energy Budget &amp; Sizing Assumptions</h2>
+                <p>The original <strong>1.44 kWh/day</strong> solar output was a concept estimate, not a verified design input. A single 60 W panel would need 24 peak-sun hours to produce that energy even before losses.</p>
+                <p>Daily PV energy is estimated as rated power (kW) × peak-sun hours × performance ratio. For an illustrative site with 4 peak-sun hours and an 80% performance ratio, a <strong>60 W panel produces 0.192 kWh/day</strong> (0.060 × 4 × 0.80). Producing <strong>1.44 kWh/day requires 450 W of rated PV</strong> under the same assumptions (1.44 ÷ (4 × 0.80) = 0.450 kW).</p>
+                <p>These assumptions are illustrative rather than site measurements. Final sizing must reconcile the installed panel rating and count with local irradiation, seasonal variation, shading, and system losses. The stated 1.6 m² area and GaAs technology also need datasheet confirmation. Lighting demand, charging demand, and storage requirements should be assessed against this site-based energy budget before claiming autonomous operation.</p>
+            </section>
+
             <section class="section" aria-labelledby="microgrid-title"><div class="diagram-pair"><div><h2 id="microgrid-title">Power Electronics &amp; Microgrid Integration</h2>
                 <p>An intelligent electro-mechanical relay system acts as the central logic controller, switching the primary input source between the turbine and the solar array based on environmental availability. The output features a dual-topology microgrid supporting Vehicle-to-Grid (V2G) and Grid-to-Vehicle (G2V) charging, utilizing boost converters and LC filters to safely regulate high-voltage delivery to a 100Ah Lithium-ion EV battery bank.</p></div><figure class="compact-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 370" role="img" aria-label="Overall power transmission" font-family="Segoe UI, sans-serif"><g fill="#64748b" fill-opacity=".15" stroke="#64748b"><rect x="12" y="10" width="146" height="48" rx="7"/><rect x="182" y="10" width="146" height="48" rx="7"/><rect x="12" y="81" width="146" height="42" rx="6"/><rect x="67" y="158" width="206" height="40" rx="6"/><rect x="67" y="218" width="206" height="40" rx="6"/><rect x="12" y="340" width="146" height="27" rx="5"/><rect x="182" y="340" width="146" height="27" rx="5"/></g><rect x="87" y="278" width="166" height="40" rx="6" fill="#0d9488" fill-opacity=".15" stroke="#0d9488"/><g stroke="currentColor" fill="none"><path d="M85 58V80m-4-6 4 6 4-6M85 123V140H170V157M255 58V140H170M166 151l4 6 4-6M170 198V217m-4-6 4 6 4-6M170 258V277m-4-6 4 6 4-6M170 318V330H85V340M170 330H255V340"/></g><g text-anchor="middle" fill="currentColor" font-size="12"><text x="85" y="30" font-weight="bold">Wind turbine</text><text x="85" y="45" font-size="10">Mechanical rotation</text><text x="255" y="30" font-weight="bold">Solar panel</text><text x="255" y="45" font-size="10">DC electricity</text><text x="85" y="99">Generator</text><text x="85" y="113" font-size="10">Rectification if AC</text><text x="170" y="175" font-weight="bold">Electromechanical relay</text><text x="170" y="189" font-size="10">Power source selection</text><text x="170" y="235" font-weight="bold">Power conditioning</text><text x="170" y="249" font-size="10">Converters, filters, charging control</text><text x="170" y="295" font-weight="bold" fill="#5eead4">Lithium-ion battery</text><text x="170" y="309" font-size="10">Energy storage</text><text x="85" y="357" font-size="11">Street lighting</text><text x="255" y="357" font-size="11">EV charging</text></g></svg><figcaption>Overall power transmission (conceptual architecture).</figcaption></figure></div>
             </section>
             
             <section class="section" aria-labelledby="cost-title">
                 <h2 id="cost-title">Economic Feasibility &amp; Cost Analysis</h2>
-                <p>A comprehensive cost analysis was conducted to validate the commercial viability of the system for real-world application. Through consultation with industry mentors and supplier brochures, the total fabrication budget was calculated to include the turbine (€1,030), 60W solar panels (€260), integration with existing street light structures (€194), and the complete EV charging battery and wiring system (€85).</p>
+                <p>A preliminary concept cost estimate was developed; it does not establish commercial viability or confirm the final energy-system sizing. Through consultation with industry mentors and supplier brochures, the total fabrication budget was calculated to include the turbine (€1,030), a solar-panel allowance listed as 60 W (€260; installed count and rating unconfirmed), integration with existing street light structures (€194), and the complete EV charging battery and wiring system (€85).</p>
                 <div class="impact-metric" aria-label="Total fabrication cost">
                     <strong>€1,569</strong>
-                    <span>Total Estimated Prototype Cost (EUR)</span>
+                    <span>Original Concept Prototype Estimate (EUR); subject to revised PV sizing and supplier confirmation</span>
 
             <nav class="project-nav" aria-label="Project navigation">
                 <a href="project-three.html">
