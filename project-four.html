@@ -277,7 +277,13 @@
             .buttons { flex-direction: column; }
             .button { width: 100%; }
         }
-    </style>
+    
+.compact-diagram { width: min(100%, 290px); margin: 0 auto; align-self: start; }
+.compact-diagram svg { display:block; width:100%; height:auto; color:var(--text); }
+.compact-diagram figcaption { font-size:.78rem; }
+.diagram-pair { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,290px); gap:20px; align-items:start; }
+@media(max-width:700px){.diagram-pair{grid-template-columns:1fr;}}
+</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -338,9 +344,9 @@
             </section>
 
             <section class="section split" aria-labelledby="maglev-title">
-                <div>
+                <div class="diagram-pair"><div>
                     <h2 id="maglev-title">Structural Dynamics &amp; Magnetic Levitation</h2>
-                    <p>To reduce the start-up friction of mechanical bearings in low-speed environments, a neodymium magnetic levitation (Maglev) suspension was integrated. Two large ring magnets and evenly spaced permanent magnets create a repulsive suspension gap for the rotor. Dynamic finite element analysis (FEA) was performed on the pole and turbine to extract the first six natural frequencies and check the structure against resonance from traffic turbulence.</p>
+                    <p>To reduce the start-up friction of mechanical bearings in low-speed environments, a neodymium magnetic levitation (Maglev) suspension was integrated. Two large ring magnets and evenly spaced permanent magnets create a repulsive suspension gap for the rotor. Dynamic finite element analysis (FEA) was performed on the pole and turbine to extract the first six natural frequencies and check the structure against resonance from traffic turbulence.</p></div><figure class="compact-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 320" role="img" aria-label="Illustrative magnetic suspension location" font-family="Segoe UI, sans-serif"><rect x="151" y="15" width="12" height="275" fill="#94a3b8"/><path d="M150 35C65 35 65 100 150 125S235 215 163 215" stroke="#64748b" stroke-width="17" fill="none"/><path d="M163 35C248 35 248 100 163 125S78 215 150 215" stroke="#a8b6c5" stroke-width="17" fill="none"/><ellipse cx="157" cy="222" rx="67" ry="10" fill="#64748b"/><rect x="112" y="234" width="90" height="12" rx="2" fill="#dc2626"/><rect x="112" y="259" width="90" height="12" rx="2" fill="#dc2626"/><rect x="95" y="273" width="124" height="13" fill="#64748b"/><rect x="141" y="286" width="32" height="32" fill="#64748b"/><rect x="100" y="228" width="114" height="47" rx="5" stroke="#ff8a3d" stroke-width="2.5" stroke-dasharray="5 3" fill="none"/><path d="M214 251H242" stroke="#ff8a3d" stroke-width="2"/><g font-size="11" fill="currentColor"><text x="246" y="242" fill="#ff8a3d" font-weight="bold">Maglev</text><text x="246" y="255" fill="#ff8a3d" font-weight="bold">suspension</text><path d="M163 23H224M222 84H249M112 252H56M173 303H225" stroke="currentColor"/><text x="228" y="27">Central shaft</text><text x="253" y="81">Turbine</text><text x="253" y="94">blades</text><text x="51" y="255" text-anchor="end">Air gap</text><text x="229" y="307">Fixed support</text></g></svg><figcaption>Illustrative location of the magnetic suspension system, highlighted in orange.</figcaption></figure>
                 </div>
                 <div class="lattice-gallery">
                     <figure>
@@ -354,9 +360,8 @@
                 </div>
             </section>
 
-            <section class="section" aria-labelledby="microgrid-title">
-                <h2 id="microgrid-title">Power Electronics &amp; Microgrid Integration</h2>
-                <p>An intelligent electro-mechanical relay system acts as the central logic controller, switching the primary input source between the turbine and the solar array based on environmental availability. The output features a dual-topology microgrid supporting Vehicle-to-Grid (V2G) and Grid-to-Vehicle (G2V) charging, utilizing boost converters and LC filters to safely regulate high-voltage delivery to a 100Ah Lithium-ion EV battery bank.</p>
+            <section class="section" aria-labelledby="microgrid-title"><div class="diagram-pair"><div><h2 id="microgrid-title">Power Electronics &amp; Microgrid Integration</h2>
+                <p>An intelligent electro-mechanical relay system acts as the central logic controller, switching the primary input source between the turbine and the solar array based on environmental availability. The output features a dual-topology microgrid supporting Vehicle-to-Grid (V2G) and Grid-to-Vehicle (G2V) charging, utilizing boost converters and LC filters to safely regulate high-voltage delivery to a 100Ah Lithium-ion EV battery bank.</p></div><figure class="compact-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 370" role="img" aria-label="Overall power transmission" font-family="Segoe UI, sans-serif"><g fill="#64748b" fill-opacity=".15" stroke="#64748b"><rect x="12" y="10" width="146" height="48" rx="7"/><rect x="182" y="10" width="146" height="48" rx="7"/><rect x="12" y="81" width="146" height="42" rx="6"/><rect x="67" y="158" width="206" height="40" rx="6"/><rect x="67" y="218" width="206" height="40" rx="6"/><rect x="12" y="340" width="146" height="27" rx="5"/><rect x="182" y="340" width="146" height="27" rx="5"/></g><rect x="87" y="278" width="166" height="40" rx="6" fill="#0d9488" fill-opacity=".15" stroke="#0d9488"/><g stroke="currentColor" fill="none"><path d="M85 58V80m-4-6 4 6 4-6M85 123V140H170V157M255 58V140H170M166 151l4 6 4-6M170 198V217m-4-6 4 6 4-6M170 258V277m-4-6 4 6 4-6M170 318V330H85V340M170 330H255V340"/></g><g text-anchor="middle" fill="currentColor" font-size="12"><text x="85" y="30" font-weight="bold">Wind turbine</text><text x="85" y="45" font-size="10">Mechanical rotation</text><text x="255" y="30" font-weight="bold">Solar panel</text><text x="255" y="45" font-size="10">DC electricity</text><text x="85" y="99">Generator</text><text x="85" y="113" font-size="10">Rectification if AC</text><text x="170" y="175" font-weight="bold">Electromechanical relay</text><text x="170" y="189" font-size="10">Power source selection</text><text x="170" y="235" font-weight="bold">Power conditioning</text><text x="170" y="249" font-size="10">Converters, filters, charging control</text><text x="170" y="295" font-weight="bold" fill="#5eead4">Lithium-ion battery</text><text x="170" y="309" font-size="10">Energy storage</text><text x="85" y="357" font-size="11">Street lighting</text><text x="255" y="357" font-size="11">EV charging</text></g></svg><figcaption>Overall power transmission (conceptual architecture).</figcaption></figure></div>
             </section>
             
             <section class="section" aria-labelledby="cost-title">
